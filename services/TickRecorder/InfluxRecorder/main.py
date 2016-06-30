@@ -22,8 +22,10 @@ def connect_db(host='localhost', port=8086, dbname='demodb'):
 
 def callback(ch, method, properties, body):
 	print(" [x] Received %r...writing to InfluxDB" % json.loads(body))
-	
-	#db_conn.write_points(
+	data = json.loads(body)
+	data['measurement'] = 'cpu_load_short'
+	print(data)
+	db_conn.write_points(data)
 	
 
 if __name__ == '__main__':
